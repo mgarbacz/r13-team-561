@@ -15,6 +15,9 @@
 /log
 /tmp
 
+# Ignore generated asset files
+/public/assets
+
 # Ignore OSX file store
 .DS_Store
 
