@@ -12,11 +12,10 @@ $ ->
 
   # Listen for keyboard events to check if shortcut
   $(document).keydown (e) ->
-    canvas.handleKeyDown e.keyCode, $('#guided-step')
+    $('#guided-step').text canvas.handleKeyDown e.keyCode
 
   # Listen for click events on tool list
   $('#shortcuts dl > dt').click (e) ->
-    canvas.selectTool $(this).text(),
-                      $(this).closest('.text-info').text(),
-                      $('#guided-step')
-
+    tool = $(this).data('tool')
+    action = $(this).data('action')
+    $('#guided-step').text canvas.selectTool tool, action

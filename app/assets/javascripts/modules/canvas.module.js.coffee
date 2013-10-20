@@ -31,27 +31,28 @@ module.exports = class Canvas
     @context.clearRect 0, 0, @width, @height
 
   # Select tool passed in
-  selectTool: (tool, action, reporter) ->
-    reporter.text 'selected: ' + tool
+  selectTool: (tool, action) ->
     if action is 'draw' then @drawSnapPoints() else @clearCanvas()
+    'selected: ' + tool
 
   # Check if key is a shortcut and select corresponding tool
   handleKeyDown: (keyCode, reporter) ->
     switch keyCode
       # Draw
-      when 82 then @selectTool 'rect', 'draw', reporter
-      when 68 then @selectTool 'line', 'draw', reporter
-      when 67 then @selectTool 'circle', 'draw', reporter
+      when 82 then @selectTool 'rect', 'draw'
+      when 68 then @selectTool 'line', 'draw'
+      when 67 then @selectTool 'circle', 'draw'
       # Adjust
-      when 88 then @selectTool 'move' , 'adjust', reporter
-      when 83 then @selectTool 'scale', 'adjust', reporter
-      when 69 then @selectTool 'rotate', 'adjust', reporter
+      when 88 then @selectTool 'move' , 'adjust'
+      when 83 then @selectTool 'scale', 'adjust'
+      when 69 then @selectTool 'rotate', 'adjust'
       # Flow
-      when 76 then @selectTool 'loop', 'flow', reporter
+      when 76 then @selectTool 'loop', 'flow'
       # Unselect
-      when 27 then @selectTool 'none', 'none', reporter
+      when 27 then @selectTool 'none', 'none'
 
   drawSnapPoints: ->
+    @clearCanvas()
     @context.lineWidth = 1
     @context.strokeStyle = '#333333'
     @context.fillStyle = '#ffff4d'
