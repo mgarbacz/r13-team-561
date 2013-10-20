@@ -29,7 +29,7 @@ module.exports = class Canvas
   selectTool: (tool, action) ->
     if action is 'draw' then @drawSnapPoints() else @clearCanvas()
 
-    if tool is 'rect' then @canvas.addEventListener 'mousedown', @drawRect
+    if tool is 'rect' then @drawRect()
 
     'move your mouse near a snap point and click to ' + action
 
@@ -45,52 +45,53 @@ module.exports = class Canvas
       @context.fill()
       @context.closePath()
 
-  drawRect: (e) =>
-    # Find the x and y within canvas
-    bounds = @canvas.getBoundingClientRect()
-    x = e.clientX - bounds.left
-    y = e.clientY - bounds.top
+  drawRect: ->
+    @canvas.addEventListener 'mousedown', (e) =>
+      # Find the x and y within canvas
+      bounds = @canvas.getBoundingClientRect()
+      x = e.clientX - bounds.left
+      y = e.clientY - bounds.top
 
-    # TODO - generalize this to any step
-    writeStep = (start, end) ->
-      $('#rect-1')
-        .html('<p class="alert alert-info">Draw a rectangle from ' +
-          start + ' to ' + end + '</p>')
+      # TODO - generalize this to any step
+      writeStep = (start, end) ->
+        $('#rect-1')
+          .html('<p class="alert alert-info">Draw a rectangle from ' +
+            start + ' to ' + end + '</p>')
 
-    for point in @snapPoints
-      # Is it near a snap point?
-      withinX = Math.abs(point.x - x) < point.radius
-      withinY = Math.abs(point.y - y) < point.radius
+      for point in @snapPoints
+        # Is it near a snap point?
+        withinX = Math.abs(point.x - x) < point.radius
+        withinY = Math.abs(point.y - y) < point.radius
 
-      if withinX and withinY
-        # TODO - generalize this to any step
-        $('#controls-steps').append '<p id="rect-1"></p>'
-        writeStep point.name, point.name
+        if withinX and withinY
+          # TODO - generalize this to any step
+          $('#controls-steps').append '<p id="rect-1"></p>'
+          writeStep point.name, point.name
 
-        # Listen for mouse drags to draw rect
-        window.addEventListener 'mousemove', (moveEvent) =>
-          rectWidth = moveEvent.clientX - bounds.left
-          rectHeight = moveEvent.clientY - bounds.top
+          # Listen for mouse drags to draw rect
+          window.addEventListener 'mousemove', (moveEvent) =>
+            rectWidth = moveEvent.clientX - bounds.left
+            rectHeight = moveEvent.clientY - bounds.top
 
-          @drawSnapPoints()
-          @context.strokeStyle = '#333333'
-          @context.fillStyle = '#5BC0DE'
-          @context.beginPath()
-          @context.rect point.x, point.y,
-                        - (point.x - rectWidth)
-                        - (point.y - rectHeight)
-          @context.stroke()
-          @context.fill()
-          @context.closePath()
+            @drawSnapPoints()
+            @context.strokeStyle = '#333333'
+            @context.fillStyle = '#5BC0DE'
+            @context.beginPath()
+            @context.rect point.x, point.y,
+                          - (point.x - rectWidth)
+                          - (point.y - rectHeight)
+            @context.stroke()
+            @context.fill()
+            @context.closePath()
 
-          writeStep point.name, rectWidth + ' ' + rectHeight
+            writeStep point.name, rectWidth + ' ' + rectHeight
 
-          # Save context of mousemove event
-          dragListener = arguments.callee
-          @canvas.addEventListener 'mouseup', (e) =>
-            # Stop listening for drag events
-            window.removeEventListener 'mousemove', dragListener
-        # Found our snap point, can break from for loop
-        break
+            # Save context of mousemove event
+            dragListener = arguments.callee
+            @canvas.addEventListener 'mouseup', (e) =>
+              # Stop listening for drag events
+              window.removeEventListener 'mousemove', dragListener
+          # Found our snap point, can break from for loop
+          break
 
 
