@@ -30,8 +30,11 @@ $ ->
 
   # Listen for click events on tool list
   $('#shortcuts dl > dt').click (e) ->
-    $('#shortcuts dl > dt').removeClass 'label-step'
-    $(this).addClass 'label-step'
+    # Highlight chosen tool
+    $('#shortcuts dl > dt').removeClass 'highlight-tool'
+    $(this).addClass 'highlight-tool'
+
+    # Select the tool in the canvas
     tool = $(this).data('tool')
     action = $(this).data('action')
     $('#guided-step').text canvas.selectTool tool, action

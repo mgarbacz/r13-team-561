@@ -39,7 +39,7 @@ module.exports = class Canvas
     @clearCanvas()
     @context.lineWidth = 1
     @context.strokeStyle = '#333333'
-    @context.fillStyle = '#ffff4d'
+    @context.fillStyle = '#f0ad4e'
     for point in @snapPoints
       @context.beginPath()
       @context.arc point.x, point.y, point.radius, 0, Math.PI * 2, false
