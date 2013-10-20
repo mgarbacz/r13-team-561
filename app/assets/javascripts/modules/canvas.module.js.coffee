@@ -35,22 +35,6 @@ module.exports = class Canvas
     if action is 'draw' then @drawSnapPoints() else @clearCanvas()
     'selected: ' + tool
 
-  # Check if key is a shortcut and select corresponding tool
-  handleKeyDown: (keyCode, reporter) ->
-    switch keyCode
-      # Draw
-      when 82 then @selectTool 'rect', 'draw'
-      when 68 then @selectTool 'line', 'draw'
-      when 67 then @selectTool 'circle', 'draw'
-      # Adjust
-      when 88 then @selectTool 'move' , 'adjust'
-      when 83 then @selectTool 'scale', 'adjust'
-      when 69 then @selectTool 'rotate', 'adjust'
-      # Flow
-      when 76 then @selectTool 'loop', 'flow'
-      # Unselect
-      when 27 then @selectTool 'none', 'none'
-
   drawSnapPoints: ->
     @clearCanvas()
     @context.lineWidth = 1
