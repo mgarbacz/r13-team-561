@@ -4,7 +4,7 @@ $ ->
   # Make sure canvas has proper height/width
   canvasElement = $('#guided-canvas')
   canvasElement[0].width = canvasElement.width()
-  canvasElement[0].height = canvasElement.height()
+  canvasElement[0].height = canvasElement.width() / 2
 
   # Load up the DYD magic
   canvas = new Canvas canvasElement[0]
