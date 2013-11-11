@@ -1,3 +1,5 @@
+No longer maintained
+--------------------
 Lives on as [existential.io] (/mgarbacz/existential.io)
 
 Draw Your Data
